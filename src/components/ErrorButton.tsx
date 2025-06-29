@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 export default function ErrorButton() {
   const [showError, setShowError] = useState(false);
-  
+
   if (showError) {
     // 意図的にエラーを発生させる
     throw new Error('This is a test error triggered by the button click');
@@ -20,9 +20,7 @@ export default function ErrorButton() {
       >
         Trigger Runtime Error
       </button>
-      <p className="mt-2 text-sm text-gray-500">
-        Click this button to test the error boundary
-      </p>
+      <p className="mt-2 text-sm text-gray-500">Click this button to test the error boundary</p>
     </div>
   );
 }
