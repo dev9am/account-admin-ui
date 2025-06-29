@@ -9,7 +9,14 @@
     "lint": "next lint",
     "biome:check": "biome check .",
     "biome:format": "biome format . --write",
-    "biome:lint": "biome lint ."
+    "biome:lint": "biome lint .",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs}": [
+      "biome check",
+      "biome format --write"
+    ]
   },
   "dependencies": {
     "next": "15.3.4",
@@ -25,6 +32,8 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
