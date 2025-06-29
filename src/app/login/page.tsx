@@ -5,6 +5,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { FormEvent } from 'react';
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { login } from '@/lib/auth';
 
 export default function LoginPage() {
@@ -31,9 +35,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div className="text-center">
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <Card className="max-w-md w-full">
+        <CardHeader className="text-center">
           <Image
             className="mx-auto h-12 w-auto"
             src="/next.svg"
@@ -42,119 +46,114 @@ export default function LoginPage() {
             height={38}
             priority
           />
-          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">アカウントにログイン</h2>
-          <p className="mt-2 text-sm text-gray-600">
+          <CardTitle className="mt-6 text-3xl font-extrabold">アカウントにログイン</CardTitle>
+          <CardDescription className="mt-2 text-sm">
             または{' '}
             <a
               href="mailto:support@example.com"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
+              className="font-medium text-primary hover:text-primary/90"
             >
               アカウント作成について問い合わせる
             </a>
-          </p>
-        </div>
+          </CardDescription>
+        </CardHeader>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="email-address" className="sr-only">
-                メールアドレス
-              </label>
-              <input
-                id="email-address"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="メールアドレス"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                disabled={isLoading}
-              />
+        <CardContent>
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email-address">メールアドレス</Label>
+                <Input
+                  id="email-address"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  placeholder="メールアドレス"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={isLoading}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="password">パスワード</Label>
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  placeholder="パスワード"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={isLoading}
+                />
+              </div>
+
+              {error && (
+                <div className="text-destructive text-sm py-2 px-4 rounded-md bg-destructive/10">
+                  {error}
+                </div>
+              )}
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <input
+                    id="remember-me"
+                    name="remember-me"
+                    type="checkbox"
+                    className="h-4 w-4 rounded border-input text-primary focus:ring-primary"
+                  />
+                  <Label htmlFor="remember-me" className="font-normal">
+                    ログイン状態を保持する
+                  </Label>
+                </div>
+
+                <div className="text-sm">
+                  <Link
+                    href="/forgot-password"
+                    className="font-medium text-primary hover:text-primary/90"
+                  >
+                    パスワードをお忘れですか？
+                  </Link>
+                </div>
+              </div>
             </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                パスワード
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="パスワード"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                disabled={isLoading}
-              />
-            </div>
-          </div>
 
-          {error && (
-            <div className="text-red-500 text-sm py-2 px-4 rounded-md bg-red-50">{error}</div>
-          )}
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-              />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                ログイン状態を保持する
-              </label>
-            </div>
-
-            <div className="text-sm">
-              <Link
-                href="/forgot-password"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                パスワードをお忘れですか？
-              </Link>
-            </div>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              disabled={isLoading}
-              className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ${
-                isLoading ? 'opacity-70 cursor-not-allowed' : ''
-              }`}
-            >
+            <Button type="submit" disabled={isLoading} className="w-full">
               {isLoading ? (
-                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                  {/* ローディングスピナー */}
-                  <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full" />
-                </span>
-              ) : (
-                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                  {/* ロックアイコン */}
+                <span className="flex items-center">
                   <svg
-                    className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                    className="animate-spin -ml-1 mr-2 h-4 w-4"
                     xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 24"
                     aria-hidden="true"
                   >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
                     <path
-                      fillRule="evenodd"
-                      d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 116 0z"
-                      clipRule="evenodd"
-                    />
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
                   </svg>
+                  処理中...
                 </span>
+              ) : (
+                'ログイン'
               )}
-              {isLoading ? '処理中...' : 'ログイン'}
-            </button>
-          </div>
-        </form>
-      </div>
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 }

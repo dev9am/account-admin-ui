@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getCurrentUser, isAuthenticated, logout, type User } from '@/lib/auth';
 
 // ダッシュボード用のカードコンポーネント
@@ -11,34 +12,32 @@ const DashboardCard = ({
   value,
   change,
   icon,
-  bgColor = 'bg-white',
 }: {
   title: string;
   value: string;
   change?: { value: string; isPositive: boolean };
   icon: React.ReactNode;
-  bgColor?: string;
 }) => {
   return (
-    <div className={`rounded-xl shadow-sm p-6 ${bgColor}`}>
-      <div className="flex justify-between items-start">
-        <div>
-          <h3 className="text-gray-500 text-sm font-medium">{title}</h3>
-          <p className="text-2xl font-bold mt-2">{value}</p>
-          {change && (
-            <div className="flex items-center mt-2">
-              <span
-                className={`text-xs font-medium ${change.isPositive ? 'text-green-500' : 'text-red-500'}`}
-              >
-                {change.isPositive ? '↑' : '↓'} {change.value}
-              </span>
-              <span className="text-xs text-gray-500 ml-1">vs 先月</span>
-            </div>
-          )}
-        </div>
-        <div className="p-3 rounded-full bg-indigo-50 text-indigo-600">{icon}</div>
-      </div>
-    </div>
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <CardTitle className="text-sm font-medium">{title}</CardTitle>
+        <div className="p-3 rounded-full bg-primary/10 text-primary">{icon}</div>
+      </CardHeader>
+      <CardContent>
+        <div className="text-2xl font-bold">{value}</div>
+        {change && (
+          <div className="flex items-center mt-2">
+            <span
+              className={`text-xs font-medium ${change.isPositive ? 'text-green-500' : 'text-destructive'}`}
+            >
+              {change.isPositive ? '↑' : '↓'} {change.value}
+            </span>
+            <span className="text-xs text-muted-foreground ml-1">vs 先月</span>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 
