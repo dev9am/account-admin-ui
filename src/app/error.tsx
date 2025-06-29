@@ -18,9 +18,7 @@ export default function ErrorComponent({ error, reset }: ErrorComponentProps) {
       <h1 className="text-3xl font-bold mb-4">Something went wrong!</h1>
       <div className="bg-red-50 border border-red-200 rounded-md p-4 mb-4 max-w-md">
         <p className="text-red-700 mb-2">Error: {error.message}</p>
-        {error.digest && (
-          <p className="text-xs text-gray-500">Digest: {error.digest}</p>
-        )}
+        {error.digest && <p className="text-xs text-gray-500">Digest: {error.digest}</p>}
       </div>
       <button
         type="button"
